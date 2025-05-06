@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body bgcolor="aqua">
+    <h1 style="margin-left: 600px;" class="stu_rec">BIO DATA</h1>
+    <hr>
+
+    <div class="table-bio">
+        
+        <table>
+        <tr>
+            <td>1.</td><th>Name :</th><td><input type="text"></td>
+        </tr>
+        <tr>
+            <td>2.</td><th>Date Of Birth :</th><td><input type="date"></td>
+        </tr>
+        <tr>
+            <td>3.</td><th>e-mail :</th><td><input type="email"></td>
+        </tr>
+        <tr>
+            <td>4.</td><th>Community,caste :</th><td><input type="text "></td>
+        </tr>
+        <tr>
+            <td>5.</td><th>Blood Group :</th><td><input type="text "></td>
+        </tr>
+        <tr>
+            <td>6.</td><th>Name Of Father:</th><td><input type="text "></td>
+        </tr>
+        <tr>
+            <td>7.</td><th>Occupation :</th><td><input type="text "></td>
+        </tr>
+        <tr>
+            <td>8.</td><th>Native Place :</th><td><input type="text "></td>
+        </tr>
+        <tr>
+            <td>9.</td><th>Mode Of Admission :</th><td><input type="text "></td>
+        </tr>
+        
+        <tr>
+            <td>10.</td><th>Exam Passed:</th>
+        </tr>
+              
+    </table>
+    </div>
+    <div style="margin-left: 450px;">
+        <table border="1">
+            <tr>
+                <td></td><th>Name of the Institution</th><th>Max Mark</th><th>Marks Scored</th><th>% of mark</th>
+            </tr>
+            <tr>
+                <th>S.S.L.C</th><td><input type="text "></td><td><input type="number"></td><td><input type="number"></td><td><input type="number"></td>
+            </tr>
+            <tr>
+                <th>H.SC</th><td><input type="text "></td><td><input type="text"></td><td><input type="number"></td><td><input type="number"></td>
+            </tr>
+        </table>
+    </div>
+    <button style="margin-left: 800px;"  onclick="valForm()">Submit</button>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <hr>
+    <div>
+        <button style="margin-left: 10px;" class="next-button"><a href="index.html"> Previous</a></button>
+        <button class="next-button"><a href="mark1.html"> Next</a></button>
+    </div>
+    <script>
+        function valForm() {
+            let inputs = document.querySelectorAll("input");
+            for (let input of inputs) {
+                if (input.value === "") {
+                    alert("Please fill all fields");
+                    return false;
+                }
+            }
+            let numberInputs = document.querySelectorAll("input[type='number']");
+            for (let input of numberInputs) {
+                if (isNaN(input.value)) {
+                    alert("Please enter number");
+                    return false;
+                }
+            }
+            
+        }
+        
+    </script>
+</body>
+</html>

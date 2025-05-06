@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Light Weight Babe</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to right, #000428, #004e92);
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar-custom {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 15px;
+        }
+
+        .navbar-custom .navbar-brand {
+            color: #ffffff !important;
+            font-size: 32px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .navbar-custom .nav-link {
+            color: #ffffff !important;
+            font-size: 18px;
+        }
+
+        .navbar-custom .nav-link:hover {
+            color: #00aaff !important;
+        }
+
+        .landing {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .landing h1 {
+            font-size: 55px;
+            font-weight: bold;
+            color: #ffffff;
+            text-transform: uppercase;
+            border-bottom: 4px solid #00aaff;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        .btn-shop {
+            background-color: #00aaff;
+            color: white;
+            font-size: 20px;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .btn-shop:hover {
+            background-color: #0077cc;
+        }
+
+        .content-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 50px;
+            border-radius: 15px;
+            backdrop-filter: blur(8px);
+        }
+
+        .footer-custom {
+            background-color: rgba(0, 0, 0, 0.9);
+            color: #f8f9fa;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 16px;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-custom">
+    <div class="container-fluid">
+        <span class="navbar-brand">Light Weight Babe</span>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="shop.html">Shop</a></li>
+                <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                <li class="nav-item"><a class="nav-link" href="cart.html">Cart</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container mt-4">
+    <a href="shop.html" class="btn btn-secondary mb-3">← BACK TO FUEL</a>
+    <div class="row">
+        <div class="col-md-6">
+            <img id="product-image" class="img-fluid">
+        </div>
+        <div class="col-md-6">
+            <h2 id="product-name">TRY NOW</h2>
+            <p id="product-description">LIGHT WEIGHT BABE</p>
+            <h4>Price: <span id="product-price">10000.00</span></h4>
+            <button id="add-to-cart" class="btn btn-warning">Add to Cart </button>
+        </div>
+    </div>
+
+<script>
+    // Load product details
+    let product = JSON.parse(localStorage.getItem("selectedProduct"));
+    if (product) {
+        document.getElementById("product-image").src = product.image;
+        document.getElementById("product-name").textContent = product.name;
+        document.getElementById("product-description").textContent = product.description;
+        document.getElementById("product-price").textContent = product.price;
+    }
+
+    // Load existing reviews
+    let reviews = JSON.parse(localStorage.getItem(product.name + "_reviews")) || [];
+    let reviewsList = document.getElementById("reviews");
+    reviews.forEach(review => {
+        let li = document.createElement("li");
+        li.classList.add("list-group-item");
+        li.textContent = "⭐ " + review;
+        reviewsList.appendChild(li);
+    });
+
+    // Add Review
+    document.getElementById("submitReview").addEventListener("click", function() {
+        let reviewText = document.getElementById("reviewText").value;
+        if (reviewText.trim() !== "") {
+            reviews.push(reviewText);
+            localStorage.setItem(product.name + "_reviews", JSON.stringify(reviews));
+
+            let li = document.createElement("li");
+            li.classList.add("list-group-item");
+            li.textContent = "⭐ " + reviewText;
+            reviewsList.appendChild(li);
+            
+            document.getElementById("reviewText").value = "";
+        }
+    });
+
+    document.getElementById("add-to-cart").addEventListener("click", function() {
+    let button = this; 
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let existingItem = cart.find(item => item.name === product.name);
+    
+    if (existingItem) {
+        existingItem.quantity++;
+    } else {
+        cart.push({ name: product.name, price: parseFloat(product.price), quantity: 1 });
+    }
+    
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    
+    button.textContent = "Added!";
+    button.style.backgroundColor = "#28a745";
+    button.style.color = "#fff";
+    button.disabled = true; 
+
+    
+    setTimeout(() => {
+        button.textContent = "Add to Cart";
+        button.style.backgroundColor = "#ffc107";
+        button.style.color = "rgb(219, 38, 38)";
+        button.disabled = false;
+    }, 2000);
+
+    
+    let cartCount = document.getElementById("cart-count");
+    if (cartCount) {
+        cartCount.textContent = cart.reduce((total, item) => total + item.quantity, 0);
+    }
+});
+
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
